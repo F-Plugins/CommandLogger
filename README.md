@@ -46,4 +46,4 @@ RocketMod: [ClickMe](https://github.com/F-Plugins/CommandLogger/releases)
 2. Create a class that inherits the ICommmandLogger interface. It will inherit a log method that you will use to log commands in your custom command logger
 3. Instanciate that class
 4. Make sure/wait until the CommandLogger plugin has been loaded
-5. Add to the command loggers your own logger. Use `Feli.RocketMod.CommandLogger.Plugin.CommandLoggers.Add(your command logger class);`
+5. Add to the command loggers your own logger. Use `Feli.RocketMod.CommandLogger.Plugin.Instance.CommandLoggers.Add(your command logger class);`
