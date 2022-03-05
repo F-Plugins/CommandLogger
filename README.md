@@ -41,7 +41,7 @@ RocketMod: [ClickMe](https://github.com/F-Plugins/CommandLogger/releases)
 </Translations>
 ```
 
-# Adding your own command logger
+# Adding your own command logger (For devs)
 1. First reference CommandLogger.dll int your project
 2. Create a class that inherits the ICommmandLogger interface. It will inherit a log method that you will use to log commands in your custom command logger
 3. Instanciate that class
