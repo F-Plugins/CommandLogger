@@ -1,12 +1,12 @@
 ﻿using Rocket.API;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 
 namespace Feli.RocketMod.CommandLogger.Models
 {
     public class Configuration : IRocketPluginConfiguration
     {
         public bool LogAllCommands { get; set; }
+        public bool ForeceLogAdminCommands { get; set; } = false;
         public string BypassPermission { get; set; }
         public bool LogToChat { get; set; }
         public string ViewChatLogPermission { get; set; }
@@ -17,6 +17,7 @@ namespace Feli.RocketMod.CommandLogger.Models
         public void LoadDefaults()
         {
             LogAllCommands = true;
+            ForeceLogAdminCommands = false;
             CommandsToLog = new()
             {
                 new("ban"),

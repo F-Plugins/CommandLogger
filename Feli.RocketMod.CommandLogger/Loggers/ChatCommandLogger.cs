@@ -20,7 +20,7 @@ namespace Feli.RocketMod.CommandLogger.Loggers
         {
             var admins = Provider.clients
                 .Select(x => UnturnedPlayer.FromPlayer(x.player))
-                .Where(x => x.HasPermission(_plugin.Configuration.Instance.ViewChatLogPermission))
+                .Where(x => x.HasPermission(_plugin.Configuration.Instance.ViewChatLogPermission) && caller.Id != x.Id)
                 .ToList();
 
             admins.ForEach(x => ChatManager.serverSendMessage(_plugin.Translate("ChatNotification", caller.DisplayName, command.Name, string.Join(" ", args)), Color.yellow, toPlayer: x.SteamPlayer(), useRichTextFormatting: true));

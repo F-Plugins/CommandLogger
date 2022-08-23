@@ -38,7 +38,7 @@ namespace Feli.RocketMod.CommandLogger
                 new DiscordCommandLogger(Instance)
             };
 
-            if(Configuration.Instance.LogToChat)
+            if (Configuration.Instance.LogToChat)
                 CommandLoggers.Add(new ChatCommandLogger(Instance));
 
             Logger.Log($"{Name} plugin v{Assembly.GetName().Version} loaded !");
@@ -47,10 +47,14 @@ namespace Feli.RocketMod.CommandLogger
 
         public void LogCommand(IRocketPlayer caller, IRocketCommand command, string[] args)
         {
-            if (caller.HasPermission(Configuration.Instance.BypassPermission))
+            if (caller is ConsolePlayer)
                 return;
 
-            if (!Configuration.Instance.CommandsToLog.Any(x=> x.Name == command.Name) && !Configuration.Instance.LogAllCommands)
+            if (caller.HasPermission(Configuration.Instance.BypassPermission) &&
+                !(caller.IsAdmin && Configuration.Instance.ForeceLogAdminCommands))
+                return;
+
+            if (!Configuration.Instance.CommandsToLog.Any(x => x.Name == command.Name) && !Configuration.Instance.LogAllCommands)
                 return;
 
             Logger.Log($"Processing execute request by {caller.DisplayName}");
@@ -62,7 +66,6 @@ namespace Feli.RocketMod.CommandLogger
                 try
                 {
                     logger.Log(caller, command, args);
-
                 }
                 catch (Exception ex)
                 {
@@ -75,9 +78,9 @@ namespace Feli.RocketMod.CommandLogger
         {
             Harmony.UnpatchAll();
 
-            foreach(var logger in CommandLoggers)
+            foreach (var logger in CommandLoggers)
             {
-                if(logger is IDisposable disposable)
+                if (logger is IDisposable disposable)
                 {
                     Logger.Log($"Disposing {logger.GetType().Name}..");
                     disposable.Dispose();
